@@ -12,7 +12,7 @@ int main()
 {
 	string s;
 	cin>>s;
-	std::regex token ("[(?.!)]");
+	std::regex token ("[(?. ,:;\"!)]");
 	vector<std::string> tokenized=toknized(s,token);
 	for(string token_:tokenized)
 	{
