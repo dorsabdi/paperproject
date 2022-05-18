@@ -26,7 +26,7 @@ int checkg(string s)
 	
 	for(int i=0;i<size;i++ )
 	{
-		if(s[i] == '.'||s[i] == '?'||s[i] == '!'||s[i] == ';'||s[i] == ',')
+		if(s[i] == '.'||s[i] == '?'||s[i] == '!'||s[i] == ';'||s[i] == ','&&i+1!=size-1)
 		{
 			if(s[i+1]!=' ')
 			{
@@ -60,7 +60,7 @@ int checkg(string s)
 		a=b;		   
  		 
 		}
-	return m;		
+	return m-1;		
         
 }
 bool checkgb(int a)
