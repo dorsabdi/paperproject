@@ -2,21 +2,20 @@
 using namespace std;
 
 
-std::vector<std::string> toknized(string s,regex token)
+
+
+
+
+
+int checkg(string s)
 {
-	sregex_token_iterator iterator{s.begin(),s.end(),token,-1};
-	vector<std::string> token_{iterator,{}};
-	return token_;
-}
-int checkg(char s[])
-{
-	int size=strlen(s);
+	int size=s.length();
 	int m=0;
 	 if (s[0] < 'A' || s[0] > 'Z')
 	 {
 	 	m=m+1;
 	 }
-	  if (s[size - 1] != '.')
+	  if (s[size - 1] != '.'||s[size - 1] != '?'||s[size - 1] != '!')
         
         {
         	m=m+1;
@@ -24,6 +23,18 @@ int checkg(char s[])
 	int a=0;
 	int b=0;	
 	int it=1;
+	
+	for(int i=0;i<size;i++ )
+	{
+		if(s[i] == '.'||s[i] == '?'||s[i] == '!'||s[i] == ';'||s[i] == ',')
+		{
+			if(s[i+1]!=' ')
+			{
+				m=m+1;
+			}
+    	}		
+	
+	}
 	while(s[it])
 	{
 		 if (s[it] >= 'A' && s[it] <= 'Z')
@@ -52,13 +63,45 @@ int checkg(char s[])
 	return m;		
         
 }
+bool checkgb(int a)
+{
+	if(a>0) return false;
+	
+	return true;
+}
+int entercount(string s)
+{
+	int enter=0;
+	int size=s.length();
+	int i=0;
+	while(i<size)
+	{
+	if(s[i]==10)
+			{
+			  enter++;
+			  if(enter>3)
+			  {
+			  	cout<<"size limit excceded";
+			  	break;
+				  }	
+			}
+	else
+	{
+		  i+=1;
+		
+			}		
+}
+return enter;
+}
 int main()
 {
 	string s;
 	getline(cin,s);
-	int size=s.length();
-	char m[size];
-	strcpy(m,s.c_str());
-	int b=checkg(m);
+	int b=checkg(s);
 	cout<<"the number of errors is: "<<b;
+	bool a=checkgb(b);
+	if(a) cout<<"true";
+	else{
+		cout<<"false";
+	}
 }
