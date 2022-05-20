@@ -15,7 +15,7 @@ int checkg(string s)
 	 {
 	 	m=m+1;
 	 }
-	 if(s[size-2]==' ')
+	 if(s[size-2]==' '||s[size-2] == '.'||s[size-2] == '?'||s[size-2] == '!'||s[size-2] == ';'||s[size-2] == ',')
 	 {
 	 	m=m+1;
 	 }
