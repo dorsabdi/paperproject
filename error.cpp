@@ -15,6 +15,10 @@ int checkg(string s)
 	 {
 	 	m=m+1;
 	 }
+	 if(s[size-2]==' ')
+	 {
+	 	m=m+1;
+	 }
 	  if (s[size - 1] != '.'||s[size - 1] != '?'||s[size - 1] != '!')
         
         {
@@ -23,43 +27,42 @@ int checkg(string s)
 	int a=0;
 	int b=0;	
 	int it=1;
+	int q=0;
 	
-	for(int i=0;i<size;i++ )
+	for(int i=1;i<size-2;i++ )
 	{
-		if(s[i] == '.'||s[i] == '?'||s[i] == '!'||s[i] == ';'||s[i] == ','&&i+1!=size-1)
+		if(s[i] == '.'||s[i] == '?'||s[i] == '!'||s[i] == ';'||s[i] == ',')
 		{
+			if(s[i-1]==' ')
+			{
+				m=m+1;
+			}
 			if(s[i+1]!=' ')
 			{
 				m=m+1;
 			}
-    	}		
+
+			for(int q=2;i+q<size-2;q++)
+			{
+			if(s[i+q]=='.'||s[i+q] == '?'||s[i+q] == '!'||s[i+q] == ';'||s[i+q]== ','||s[i+q]<'A'||s[i+q]>'Z')
+			{
+				q++;
+			}
+			else
+			{
+				i=size-2-q;
+			}
+	    	}
+    	}
+    	if(q!=0)
+    	{
+    		m=m+1;
+		}
+				
 	
 	}
-	while(s[it])
-	{
-		 if (s[it] >= 'A' && s[it] <= 'Z')
-            a = 0;
-         else if (s[it] == ' ')
-            a = 1; 
-		else if (s[it] >= 'a' && s[it] <= 'z')
-            a = 2;
-		else if (s[it] == '.')
-            a = 3;	
-		if (b == a && b != 2)
-            m=m+1;
- 
-        if (b == 2 && a == 0)
-            m=m+1;
-        if (a == 3 && b != 1)
-            if (s[it + 1] == '\0')
-			{
-				m=m+0;
-				} 
-		
-		it++;
-		a=b;		   
- 		 
-		}
+
+	
 	return m-1;		
         
 }
