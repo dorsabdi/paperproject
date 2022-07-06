@@ -1,13 +1,12 @@
 ﻿  paperprojecttwo.cpp
-  The contents of <format> are available only in c++latest mode with concepts support;
-  see https://github.com/microsoft/STL/issues/1814 for details.
-C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(20,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(108,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(237,28): warning C4018: '<': signed/unsigned mismatch
-C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(297,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(311,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(311,33): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(312,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(312,33): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(428,24): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(19,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(120,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(251,28): warning C4018: '<': signed/unsigned mismatch
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(362,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(363,39): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(381,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(381,33): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(382,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(382,33): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+C:\Users\taha\source\repos\paperprojecttwo\paperprojecttwo\paperprojecttwo.cpp(499,24): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   paperprojecttwo.vcxproj -> C:\Users\taha\source\repos\paperprojecttwo\x64\Debug\paperprojecttwo.exe

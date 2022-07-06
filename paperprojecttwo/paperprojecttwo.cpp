@@ -7,7 +7,6 @@
 #include <regex>
 #include <chrono>  // chrono::system_clock
 #include <ctime>   // localtime
-#include <format>
 #include <iomanip>
 #include <iostream>
 #include <iostream>
@@ -40,7 +39,11 @@ private:
 	int unipaperid;
 	// array of refrences in which id's of diffrent papers are stored in
 	vector<int> refrencecs;
+	// vector for users array
+	vector<int> userids;
+
 	bool evaluation;
+
 	static int papercount;
 public:
 	void setpapername(string papername) {
@@ -80,6 +83,12 @@ public:
 	vector<int> getrefrencecs() {
 		return this->refrencecs;
 	}
+	void submitruserids(int id) {
+		userids.push_back(id);
+	}
+	vector<int> getuserids() {
+		return this->userids;
+	}
 	void setevaluation(bool value) {
 		this->evaluation = value;
 	}
@@ -104,6 +113,9 @@ public:
 		this->username = username;
 	}
 
+	int getaccountcount() {
+		return accountcount;
+	}
 	void setpasswordstrength() {
 		int size = this->password.length();
 		int s = 0;
@@ -215,12 +227,14 @@ int Account::accountcount = 0;
 	  */
 
 
+//reading j son
 size_t writefunc(void* ptr, size_t size, size_t nmemb, std::string* s)
 {
 	s->append(static_cast<char*>(ptr), size * nmemb);
 	return size * nmemb;
 }
 
+//here getting the json body of issues. 
 vector<string> decode(string text)
 {
 	vector<string> results;
@@ -246,6 +260,56 @@ vector<string> decode(string text)
 	return results;
 }
 
+vector<string> decode_(string text)
+{
+	vector<string> results;
+	Json::Value root;
+	Json::Reader reader;
+	bool parsingSuccessful = reader.parse(text, root);
+	if (!parsingSuccessful)
+	{
+		cout << "Error parsing the string" << endl;
+	}
+
+	const Json::Value mynames = root["matches"];
+
+
+		Json::StreamWriterBuilder builder;
+		builder["indentation"] = ""; // If you want whitespace-less output
+		const std::string output = Json::writeString(builder, mynames);
+		int i = -1;
+
+		std::string::size_type pos_ = 0;
+		std::string::size_type pos__ = 0;
+		std::string::size_type pos = 0;
+		std::string::size_type pos___ = 0;
+
+
+		string a = "\"issueType\":\"misspelling\"";
+		while ((pos = output.find("\"issueType\":\"misspelling\"", pos)) != std::string::npos) {
+			pos += a.length();
+			results.push_back(output);
+		}
+		string b = "\"issueType\":\"whitespace\"";
+		while ((pos_ = output.find("\"issueType\":\"whitespace\"", pos_)) != std::string::npos) {
+			pos_ += b.length();
+			results.push_back(output);
+		}
+		string c = "\"issueType\":\"typographical\"";
+		while ((pos__ = output.find("\"issueType\":\"typographical\"", pos__)) != std::string::npos) {
+			pos__ += c.length();
+			results.push_back(output);
+		}
+		string d = "\"issueType\":\"grammar\"";
+		while ((pos___ = output.find("\"issueType\":\"grammar\"", pos___)) != std::string::npos) {
+			pos___ += d.length();
+			results.push_back(output);
+		}
+
+	return results;
+}
+
+//time to string here to submit the date.
 string setdatetostring() {
 	time_t rawtime;
 	struct tm* timeinfo;
@@ -260,6 +324,7 @@ string setdatetostring() {
 	return str;
 }
 
+//here we connect to api
 int connecttoapi(string str) {
 
 		string s = "text=";
@@ -295,6 +360,11 @@ int connecttoapi(string str) {
 		curl_easy_cleanup(hnd);
 
 		int counts = decode(result).size();
+		int counts_ = decode_(result).size();
+
+		cout << "_______" << "\n";
+		cout << " first : " << " " << counts << " second : " << " " << counts_ << "\n";
+		cout << "_______" << "\n";
 
 		delete[] writable;
 
@@ -343,7 +413,7 @@ float LevenshteinDistanceCalculate(const string& st1, const string& st2) {
 		return token_;
 	}
 
-	// () 
+	// check if they are balanced () 
 	int chechparantez(string s) {
 		char left = ')';
 		char right = '(';
@@ -365,7 +435,7 @@ float LevenshteinDistanceCalculate(const string& st1, const string& st2) {
 	}
 
 
-	// check errors
+	// check errors we dont use it just in case
 	int chech(string s) {
 		int error = 0;
 		if (isupper(s[0]) == false) {
@@ -422,6 +492,7 @@ float LevenshteinDistanceCalculate(const string& st1, const string& st2) {
 		return balance;
 	}
 
+	// counts enters made;
 	int entercount(string s)
 	{
 		int enter = 0;
@@ -434,6 +505,7 @@ float LevenshteinDistanceCalculate(const string& st1, const string& st2) {
 		return enter;
 	}
 
+	// here we see if paper is valid
 	bool papervalidity(Paper paper, vector<Paper> paperList, regex token) {
 		bool valuesimilarity = true;
 		bool valuenumberofwords = false;
@@ -472,15 +544,21 @@ float LevenshteinDistanceCalculate(const string& st1, const string& st2) {
 		return true;
 	}
 	else {
+		cout << "valuesimilarity" << valuesimilarity << endl;
+		cout << "valuenumberofwords" << valuenumberofwords << endl;
+		cout << "valuenumberofwordsoftitle" << valuenumberofwordsoftitle << endl;
+		cout << "enters:" << entercount(paper.gettextbody()) << endl;
 		return false;
 	}
 	}
 
 int main(int argc, char** argv) {
 
+	//here we save papers and accounts.
 	vector<Paper> paperList;
 	vector<Account> accountList;
 	bool programvalue = true;
+	// we tokenize based on it.
 	regex token("[(?. ,:;\"!)]");
 
 	while (programvalue) {
@@ -542,7 +620,7 @@ int main(int argc, char** argv) {
 					newPaper.setdate(setdatetostring());
 
 					//newPaper.setdate(return_current_time_and_date);
-					//  C:\\Users\\taha\\Documents\\testcase(100).txt for example
+					//  C:\\Users\\taha\\Documents\\gh.txt for example
 					cout << "give us the title :" << endl;
 					getline(cin, name);
 					cout << "give us the text address :" << endl;
@@ -567,6 +645,25 @@ int main(int argc, char** argv) {
 							newPaper.submitrefrencec(refrenceid);
 						}
 
+					int contributers; 
+
+					cout << "how many other people have contributed to your paper ? " << endl;
+					cin >> contributers;
+
+					for (int i = 0; i < contributers; i++) {
+						cout << " submit user ids here :" << endl;
+						int userid;
+						cin >> userid;
+						if (userid <= it->getaccountcount()) {
+							cout << endl;
+							newPaper.submitruserids(userid);
+						}
+						else {
+							cout << "it is not possible . try again. " << endl;
+						}
+
+					}
+
 					//evaluattion functions here;
 					// something like this here
 					//newPaper.setevaluation(false);
@@ -581,6 +678,15 @@ int main(int argc, char** argv) {
 					newPaper.setunipaperid();
 					// submit paper to account paper .
 					it->addsubmitedpaper(newPaper);
+
+					for (int i = 0; i < contributers; i++) {
+						for (int j = 0; j < it->getaccountcount(); j++) {
+							if (newPaper.getuserids().at(i) == accountList.at(j).getuniid()) {
+								accountList.at(j).addsubmitedpaper(newPaper);
+							}
+						}
+					}
+					
 					int count = connecttoapi(strtextbody);
 					if (papervalidityvalue == true && count == 0) {
 						cout << "the account is succsefuly submited " << endl;
@@ -613,6 +719,14 @@ int main(int argc, char** argv) {
 		for (itpaper = papercev.begin(); itpaper != papercev.end(); ++itpaper) {
 			cout << "the paper title : " << itpaper->getpapername() << " -> its validation is " << itpaper->getevaluation() << " the id is : " << itpaper->getunipaperid() << endl;
 		 }
+		}
+
+		else if (S == "listofaccounts") {
+		std::vector<Account>::iterator itpaper;
+		std::vector<Account> papercev = accountList;
+		for (itpaper = papercev.begin(); itpaper != papercev.end(); ++itpaper) {
+			cout << "the user name : " << itpaper->getusername() << " and the id is : " << itpaper->getuniid() << " whole number of accounts :" << itpaper->getaccountcount() << endl;
+		}
 		}
 
 		else if (S == "exit") {
